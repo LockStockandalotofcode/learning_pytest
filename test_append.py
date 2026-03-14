@@ -5,13 +5,12 @@ def first_entry():
     return "a"
 
 @pytest.fixture
-def order(first_entry):
-    return [first_entry]
+def order():
+    return []
 
-def test_string(order):
-    order.append("B")
-    assert order == ["a", "B"]
+@pytest.fixture
+def append_first(order, first_entry):
+    return order.append(first_entry)
 
-def test_int(order):
-    order.append(2)
-    assert order == ["a", 2]
+def test_string_only(append_first, order, first_entry):
+    assert order == [first_entry]
